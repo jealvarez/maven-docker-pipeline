@@ -1,0 +1,50 @@
+plugins {
+  id 'groovy'
+  id 'java'
+  id 'idea'
+}
+
+group 'com.aleibran'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+  maven { url 'http://repo.jenkins-ci.org/releases/' }
+}
+
+// follow the structure as dictated by Jenkins:
+sourceSets {
+  main {
+    java {
+      srcDirs = []
+    }
+    groovy {
+      // all code files will be in either of the folders
+      srcDirs = ['src', 'vars']
+    }
+  }
+  test {
+    java {
+      srcDir 'test'
+    }
+  }
+}
+
+dependencies {
+  compile 'org.apache.ivy:ivy:2.4.0'
+
+  compileOnly 'org.codehaus.groovy:groovy-all:2.4.12'
+
+  implementation 'com.cloudbees:groovy-cps:1.26'
+  implementation 'org.jenkins-ci.main:jenkins-core:2.169'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-api:2.19@jar'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-cps:2.65@jar'
+  implementation 'org.jenkins-ci.plugins:job-dsl-core:1.66@jar'
+  
+  compile 'org.yaml:snakeyaml:1.24'
+  compile 'org.apache.commons:commons-lang3:3.8.1'
+
+  testCompile 'junit:junit:4.12'
+}
